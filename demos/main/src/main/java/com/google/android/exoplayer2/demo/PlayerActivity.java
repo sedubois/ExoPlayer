@@ -15,6 +15,7 @@
  */
 package com.google.android.exoplayer2.demo;
 
+import static com.google.android.exoplayer2.C.WAKE_MODE_NETWORK;
 import static com.google.android.exoplayer2.util.Assertions.checkNotNull;
 
 import android.content.Intent;
@@ -88,7 +89,7 @@ public class PlayerActivity extends AppCompatActivity
   protected StyledPlayerView playerView;
   protected LinearLayout debugRootView;
   protected TextView debugTextView;
-  protected SimpleExoPlayer player;
+  public static SimpleExoPlayer player;
 
   private boolean isShowingTrackSelectionDialog;
   private Button selectTracksButton;
@@ -303,6 +304,7 @@ public class PlayerActivity extends AppCompatActivity
       player.addAnalyticsListener(new EventLogger(trackSelector));
       player.setAudioAttributes(AudioAttributes.DEFAULT, /* handleAudioFocus= */ true);
       player.setPlayWhenReady(startAutoPlay);
+      player.setWakeMode(WAKE_MODE_NETWORK);
       playerView.setPlayer(player);
       playerView.setPlaybackPreparer(this);
       debugViewHelper = new DebugTextViewHelper(player, debugTextView);
@@ -315,6 +317,7 @@ public class PlayerActivity extends AppCompatActivity
     player.setMediaItems(mediaItems, /* resetPosition= */ !haveStartPosition);
     player.prepare();
     updateButtonVisibility();
+    startService(new Intent(this, PlayerService.class));
     return true;
   }
 

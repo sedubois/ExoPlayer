@@ -61,4 +61,8 @@
 
   <string name="prefer_extension_decoders">Prefer extension decoders</string>
 
+  <string name="channel_name">ExoPlayer</string>
+
+  <string name="channel_description">This is an ExoPlayer demo</string>
+
 </resources>
